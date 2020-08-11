@@ -6,37 +6,41 @@ function bullsAndCows(generatedNumber = '1296',
   enteredNumber = document.getElementById('input').value) {
   const regExp = /^[A-Za-z]+$/;
   const result = {};
-  
+  let generated = generatedNumber;
+  let entered = enteredNumber;
+
   result.bulls = 0;
   result.cows = 0;
 
-  if (enteredNumber === undefined || enteredNumber.length !== 4
-    || regExp.test(enteredNumber)) {
+  if (entered === undefined || entered.length !== 4
+    || regExp.test(entered)) {
     alert('Неправильно введено значение, попробуйте снова!');
     document.getElementById('input').value = '';
 
     return;
   }
 
-  for (let i = 0; i < generatedNumber.length; i++) {
-    for (let j = 0; j < enteredNumber.length; j++) {
-      if (generatedNumber[i] === enteredNumber[j] && i === j) {
+  for (let i = 0; i < generated.length; i++) {
+    for (let j = 0; j < entered.length; j++) {
+      if (generated[i] === entered[j]
+      && i === j && generated[i] !== ' ') {
         result.bulls++;
-
-        if (result.bulls === 4) {
-          alert ('You win!!!!');
-          document.getElementById('input').value = '';
-
-          return;
-        }
-        generatedNumber.split('').splice(i, 1, 't').join('');
-        enteredNumber.split('').splice(j, 1, 't').join('');
+        generated = generated.split('');
+        generated.splice(i, 1, ' ');
+        generated = generated.join('');
+        entered = entered.split('');
+        entered.splice(j, 1, ' ');
+        entered = entered.join('');
       }
 
-      if (generatedNumber[i] === enteredNumber[j] && i !== j) {
+      if (generated[i] === entered[j] && i !== j) {
         result.cows++;
-        generatedNumber.split('').splice(i, 1, 't').join('');
-        enteredNumber.split('').splice(j, 1, 't').join('');
+        generated = generated.split('');
+        generated.splice(i, 1, ' ');
+        generated = generated.join('');
+        entered = entered.split('');
+        entered.splice(j, 1, ' ');
+        entered = entered.join('');
       }
     }
   }
